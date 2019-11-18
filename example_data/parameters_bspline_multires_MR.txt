@@ -1,0 +1,84 @@
+// Example parameter file for B-spline registration
+
+// The internal pixel type, used for internal computations
+// Leave to float in general.
+// NB: this is not the type of the input images! The pixel
+// type of the input images is automatically read from the
+// images themselves.
+(FixedInternalImagePixelType "float")
+(MovingInternalImagePixelType "float")
+
+// The dimensions of the fixed and moving image
+(FixedImageDimension 2)
+(MovingImageDimension 2)
+
+// Registration setup
+(Registration "MultiResolutionRegistration")
+(NumberOfResolutions 5)
+// Define pyramids of both images at multiple scales
+(FixedImagePyramid "FixedSmoothingImagePyramid")
+(MovingImagePyramid "MovingSmoothingImagePyramid")
+
+// Optimizer
+(Optimizer "RegularStepGradientDescent")
+// Maximum number of iterations in each resolution level:
+(MaximumNumberOfIterations 500 500 500 500 500)
+
+
+// Transformation
+(Transform "BSplineTransform")
+// The control point spacing of the bspline transformation in
+// the finest resolution level. 
+(FinalGridSpacingInPhysicalUnits 4)
+
+// Metric
+(Metric "AdvancedNormalizedCorrelation")
+(SubtractMean "true")
+(NumberOfSpatialSamples 4096)
+
+// Refresh these spatial samples in every iteration, and select
+// them randomly. 
+(NewSamplesEveryIteration "true")
+(ImageSampler "RandomCoordinate")
+
+// Order of B-Spline interpolation used during registration/optimisation.
+(BSplineInterpolationOrder 1)
+
+// Order of B-Spline interpolation used for applying the final
+// deformation.
+(FinalBSplineInterpolationOrder 3)
+
+//Default pixel value for pixels that come from outside the picture:
+(DefaultPixelValue 0)
+
+// Choose whether to generate the deformed moving image.
+(WriteResultImage "true")
+
+// The pixel type and format of the resulting deformed moving image
+(ResultImagePixelType "unsigned char")
+(ResultImageFormat "tiff")
+
+
+
+
+// Some settings to avoid warnings
+(UseDirectionCosines "true")
+(Interpolator "BSplineInterpolator")
+(ResampleInterpolator "FinalBSplineInterpolator")
+(Resampler "DefaultResampler")
+(HowToCombineTransforms "Compose")
+(ErodeMask "false")
+(AutomaticScalesEstimation "true")
+(MaximumStepLength 1.0)
+(MinimumStepLength 0.01) 
+(BSplineTransformSplineOrder 3)
+(UseCyclicTransform "false")
+(ShowExactMetricValue "false")
+(CheckNumberOfSamples "true")
+(FixedImageBSplineInterpolationOrder 1)
+(UseRandomSampleRegion "false")
+(MinimumGradientMagnitude 1e-08)
+(RelaxationFactor 0.5)
+
+
+
