@@ -14,7 +14,7 @@ The package requires `numpy` and `SimpleITK`, which can be installed with `pip` 
 
 ### Tutorial
 
-A Python script that covers most the functionality is included in the `example.py` file.
+A Python script that covers most the functionality is included in the [`example.py`](example.py) file.
 
 ### Using the 3D image viewer
 
