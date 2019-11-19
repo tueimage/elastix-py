@@ -2,7 +2,7 @@ import setuptools
 
 
 setuptools.setup(
-    name="elastix-py",
+    name="elastix",
     version="0.0.1",
     author="Koen A. J. Eppenhof",
     author_email="k.a.j.eppenhof@tue.nl",
