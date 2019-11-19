@@ -1,4 +1,4 @@
-# `elastix-py` -- A thin Python wrapper for Elastix
+# `elastix-py`
 A Python wrapper for the Elastix image registration software package. This package allows you to call Elastix and Transformix from Python. 
 
 ### Installation
