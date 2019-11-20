@@ -12,15 +12,16 @@ import SimpleITK as sitk
 
 # IMPORTANT: these paths may differ on your system, depending on where
 # Elastix has been installed. Please set accordingly.
-ELASTIX_PATH = os.path.join(r'/usr/bin/elastix')
-TRANSFORMIX_PATH = os.path.join(r'/usr/bin/transformix')
-if not os.path.exists(ELASTIX_PATH)
+ELASTIX_PATH = os.path.join('/home/ishaan/elastix/bin/elastix')
+TRANSFORMIX_PATH = os.path.join('/home/ishaan/elastix/bin/transformix')
+
+if not os.path.exists(ELASTIX_PATH):
     raise IOError('Elastix cannot be found, please set the correct ELASTIX_PATH.')
-if not os.path.exists(TRANSFORMIX_PATH)
+if not os.path.exists(TRANSFORMIX_PATH):
     raise IOError('Transformix cannot be found, please set the correct TRANSFORMIX_PATH.')
 
 # Make a results directory if non exists
-if not os.path.exists('results'):
+if os.path.exists('results') is False:
     os.mkdir('results')
 
 # Define the paths to the two images you want to register
@@ -81,7 +82,7 @@ jacobian_determinant_path = tr.jacobian_determinant(output_dir=r'results')
 deformation_field_path = tr.deformation_field(output_dir=r'results')
 
 # Add a plot of the Jacobian determinant (in this case, the file is a tiff file)
-ax[3].imshow(imageio.imread(jacobian_determinant_path).replace('dcm', 'tiff'))
+ax[3].imshow(imageio.imread(jacobian_determinant_path.replace('dcm', 'tiff')))
 ax[3].set_title('Jacobian\ndeterminant')
 
 # Show the plots
