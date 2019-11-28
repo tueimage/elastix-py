@@ -69,7 +69,7 @@ tr = elastix.TransformixInterface(parameters=transform_path,
                                   transformix_path=TRANSFORMIX_PATH)
 
 # Transform a new image with the transformation parameters
-transformed_image_path = tr.transform_image(fixed_image_path, output_dir=r'results')
+transformed_image_path = tr.transform_image(moving_image_path, output_dir=r'results')
 
 # Get the Jacobian matrix
 jacobian_matrix_path = tr.jacobian_matrix(output_dir=r'results')
