@@ -79,7 +79,7 @@ class TransformixInterface:
 
         self._execute(command, verbose)
         after = os.listdir(output_dir)
-        
+
         # Find out to which file the result was written
         # On Linux, 2D images will result in dcm files, which are empty
         # On Windows, they should result in tiff files
@@ -105,7 +105,7 @@ class TransformixInterface:
 
         self._execute(command, verbose)
         after = os.listdir(output_dir)
-        
+
         # Find out to which file the result was written
         # On Linux, 2D images will result in dcm files, which are empty
         # On Windows, they should result in tiff files
@@ -155,12 +155,15 @@ class TransformixInterface:
 
         self._execute(command, verbose)
         after = os.listdir(output_dir)
-        
+
+
         # Find out to which file the result was written
         if 'result.tiff' in after:
             filename = 'result.tiff'
         elif 'result.mhd' in after:
             filename = 'result.mhd'
+        elif 'result.nii' in after:
+            filename = 'result.nii'
         else:
             TransformixError('Transformed image not found in results folder {}'.format(output_dir))
         path = os.path.join(output_dir, filename)
