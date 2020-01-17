@@ -190,10 +190,7 @@ class TransformixInterface:
                    '-jac', 'all'
                    ]
 
-        if os.path.exists(output_dir) is True:
-            shutil.rmtree(output_dir)
-
-        os.makedirs(output_dir)
+        assert (os.path.exists(output_dir))
 
         self._execute(command, verbose)
         after = os.listdir(output_dir)
@@ -222,10 +219,7 @@ class TransformixInterface:
                    '-out', output_dir,
                    '-jacmat', 'all']
 
-        if os.path.exists(output_dir) is True:
-            shutil.rmtree(output_dir)
-
-        os.makedirs(output_dir)
+        assert (os.path.exists(output_dir))
 
         self._execute(command, verbose)
         after = os.listdir(output_dir)
