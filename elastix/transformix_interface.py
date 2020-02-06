@@ -17,8 +17,6 @@ logger = logging.getLogger(__name__)
 DEFAULT_TRANSFORMIX_PATH = 'transformix'
 
 
-
-
 class TransformixInterface:
 
     def __init__(self,
@@ -91,6 +89,8 @@ class TransformixInterface:
             filename = 'deformationField.dcm'
         elif 'deformationField.tiff' in after:
             filename = 'deformationField.tiff'
+        elif 'deformationField.nii' in after:
+            filename = 'deformationField.nii'
         else:
             TransformixError('Deformation field not found in results folder {}'.format(output_dir))
         path = os.path.join(output_dir, filename)
