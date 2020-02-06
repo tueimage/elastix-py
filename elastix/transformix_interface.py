@@ -6,7 +6,7 @@
 
 from __future__ import division, print_function
 
-import os
+import os, shutil
 import signal
 import subprocess
 import logging
@@ -79,7 +79,7 @@ class TransformixInterface:
 
         self._execute(command, verbose)
         after = os.listdir(output_dir)
-        
+
         # Find out to which file the result was written
         # On Linux, 2D images will result in dcm files, which are empty
         # On Windows, they should result in tiff files
@@ -89,6 +89,8 @@ class TransformixInterface:
             filename = 'deformationField.dcm'
         elif 'deformationField.tiff' in after:
             filename = 'deformationField.tiff'
+        elif 'deformationField.nii' in after:
+            filename = 'deformationField.nii'
         else:
             TransformixError('Deformation field not found in results folder {}'.format(output_dir))
         path = os.path.join(output_dir, filename)
@@ -103,9 +105,11 @@ class TransformixInterface:
                    '-jac', 'all'
                    ]
 
+        assert (os.path.exists(output_dir))
+
         self._execute(command, verbose)
         after = os.listdir(output_dir)
-        
+
         # Find out to which file the result was written
         # On Linux, 2D images will result in dcm files, which are empty
         # On Windows, they should result in tiff files
@@ -115,6 +119,8 @@ class TransformixInterface:
             filename = 'spatialJacobian.dcm'
         elif 'spatialJacobian.tiff' in after:
             filename = 'spatialJacobian.tiff'
+        elif 'spatialJacobian.nii' in after:
+            filename = 'spatialJacobian.nii'
         else:
             TransformixError('Spatial Jacobian determinant not found in results folder {}'.format(output_dir))
         path = os.path.join(output_dir, filename)
@@ -128,6 +134,8 @@ class TransformixInterface:
                    '-out', output_dir,
                    '-jacmat', 'all']
 
+        assert (os.path.exists(output_dir))
+
         self._execute(command, verbose)
         after = os.listdir(output_dir)
 
@@ -140,10 +148,12 @@ class TransformixInterface:
             filename = 'fullSpatialJacobian.dcm'
         elif 'fullSpatialJacobian.tiff' in after:
             filename = 'fullSpatialJacobian.tiff'
+        elif 'fullSpatialJacobian.nii' in after:
+            filename = 'fullSpatialJacobian.nii'
         else:
             TransformixError('Spatial Jacobian not found in results folder {}'.format(output_dir))
         path = os.path.join(output_dir, filename)
-        assert os.path.exists(path)
+
         return path
 
     def transform_image(self, image_path, output_dir=None, verbose=True):
@@ -155,12 +165,15 @@ class TransformixInterface:
 
         self._execute(command, verbose)
         after = os.listdir(output_dir)
-        
+
+
         # Find out to which file the result was written
         if 'result.tiff' in after:
             filename = 'result.tiff'
         elif 'result.mhd' in after:
             filename = 'result.mhd'
+        elif 'result.nii' in after:
+            filename = 'result.nii'
         else:
             TransformixError('Transformed image not found in results folder {}'.format(output_dir))
         path = os.path.join(output_dir, filename)

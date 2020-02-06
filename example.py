@@ -14,13 +14,14 @@ import SimpleITK as sitk
 # Elastix has been installed. Please set accordingly.
 ELASTIX_PATH = os.path.join(r'/usr/bin/elastix')
 TRANSFORMIX_PATH = os.path.join(r'/usr/bin/transformix')
+
 if not os.path.exists(ELASTIX_PATH):
     raise IOError('Elastix cannot be found, please set the correct ELASTIX_PATH.')
 if not os.path.exists(TRANSFORMIX_PATH):
     raise IOError('Transformix cannot be found, please set the correct TRANSFORMIX_PATH.')
 
-# Make a results directory if none exists
-if not os.path.exists('results'):
+# Make a results directory if non exists
+if os.path.exists('results') is False:
     os.mkdir('results')
 
 # Define the paths to the two images you want to register
