@@ -7,16 +7,17 @@ of (bspline) interpolation from 3 to 0 (for binary labels)
 Mainly used to auto-edit transform parameter files generated from registering a pair of images to resample binary
 labels, which typically involve a change in the order of interpolation and/or pixel type.
 
+See: Pg.23 of Elastix manual
+
 @author: Ishaan Bhat
 @email: ishaan@isi.uu.nl
 """
-
+import os
 
 class TransformParameterFileEditor(object):
 
     def __init__(self,
                  transform_parameter_file_path=None,
-                 initial_transform_parameter_file_path=None,
                  output_file_name=None):
         """
 
@@ -29,7 +30,6 @@ class TransformParameterFileEditor(object):
 
         """
         self.transform_parameter_file_path = transform_parameter_file_path
-        self.initial_transform_parameter_file = initial_transform_parameter_file_path
         self.output_file_name = output_file_name
         self.params_dict = {}
 
@@ -51,7 +51,7 @@ class TransformParameterFileEditor(object):
                 if line[0] == '/' and line[1] == '/':  # Comment-line, skip it
                     continue
                 elif line[0] == '(' and line[-1] == ')':  # Valid line
-                    self.params_dict[string_tuple[0][1:]] = line[len(string_tuple[0]):-1]
+                    self.params_dict[string_tuple[0][1:]] = line[len(string_tuple[0])+1:-1]
             else:
                 continue
 
@@ -65,13 +65,22 @@ class TransformParameterFileEditor(object):
 
         """
         assert (len(self.params_dict) > 0)
-        if self.initial_transform_parameter_file is not None:
-            self.params_dict['InitialTransformParametersFileName'] = ' ' + self.initial_transform_parameter_file
 
         # Result image format
         self.params_dict['ResultImagePixelType'] = ' "' + 'float' + '"'
         # Interpolation order to 0 for binary labels
-        self.params_dict['FinalBSpineInterpolatorOrder'] = ' 0'
+        self.params_dict['FinalBSpineInterpolatorOrder'] = '0'
+
+        # Make the initial transform file point to an "edited" version
+        if self.params_dict['InitialTransformParametersFileName'] != '"NoInitialTransform"':
+            original_path = self.params_dict['InitialTransformParametersFileName']
+            original_fname = original_path.split(os.sep)[-1][:-1] # Ignore training "
+            transform_stage = original_fname.split('.')[1]
+            new_fname = 'TransformParameters_mask.{}.txt'.format(transform_stage)
+            out_dir = os.sep.join(original_path.split(os.sep)[:-1])
+            new_path = os.path.join(out_dir, new_fname)
+            new_path += '"' # Add trailing " so that transformix can parse the file correctly
+            self.params_dict['InitialTransformParametersFileName'] = new_path
 
     def _writer_parameters_to_file(self):
         """
@@ -82,6 +91,7 @@ class TransformParameterFileEditor(object):
         for key, value in self.params_dict.items():
             parameter_file_string += '('
             parameter_file_string += key
+            parameter_file_string += ' '
             parameter_file_string += value
             parameter_file_string += ')'
             parameter_file_string += '\n'
