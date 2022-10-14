@@ -69,7 +69,7 @@ class TransformParameterFileEditor(object):
         # Result image format
         self.params_dict['ResultImagePixelType'] = ' "' + 'float' + '"'
         # Interpolation order to 0 for binary labels
-        self.params_dict['FinalBSpineInterpolatorOrder'] = '0'
+        self.params_dict['FinalBSplineInterpolationOrder'] = '"' + '0' + '"'
 
         # Make the initial transform file point to an "edited" version
         if self.params_dict['InitialTransformParametersFileName'] != '"NoInitialTransform"':
