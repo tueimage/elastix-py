@@ -38,8 +38,22 @@ class ElastixInterface:
         command = [self.elastix_path]
 
         if fixed_image and moving_image:
-            command += ['-f', fixed_image,
-                       '-m', moving_image]
+            # Extend the command to handle multi-channel input
+            # for pairwise multichannel registration.
+            # Sec 6.1.1 of the elastix manual
+            if isinstance(fixed_image, list) is True and isinstance(moving_image, list) is True:
+                assert(len(fixed_image) ==  len(moving_image))
+
+                # Add all fixed image paths to the cmd
+                for idx, fpath in enumerate(fixed_image):
+                    command += ['-f{}'.format(idx), fpath]
+
+                for idx, mpath in enumerate(moving_image):
+                    command += ['-m{}'.format(idx), mpath]
+
+            else:
+                command += ['-f', fixed_image,
+                           '-m', moving_image]
 
         if fixed_points and moving_points:
             command += ['-fp', fixed_points,
