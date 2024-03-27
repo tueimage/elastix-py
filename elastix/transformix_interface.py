@@ -121,6 +121,8 @@ class TransformixInterface:
             filename = 'spatialJacobian.tiff'
         elif 'spatialJacobian.nii' in after:
             filename = 'spatialJacobian.nii'
+        elif 'spatialJacobian.mha' in after:
+            filename = 'spatialJacobian.mha'
         else:
             TransformixError('Spatial Jacobian determinant not found in results folder {}'.format(output_dir))
         path = os.path.join(output_dir, filename)
@@ -172,10 +174,13 @@ class TransformixInterface:
             filename = 'result.tiff'
         elif 'result.mhd' in after:
             filename = 'result.mhd'
+        elif 'result.mha' in after:
+            filename = 'result.mha'
         elif 'result.nii' in after:
             filename = 'result.nii'
         else:
             TransformixError('Transformed image not found in results folder {}'.format(output_dir))
+
         path = os.path.join(output_dir, filename)
         assert os.path.exists(path)
         return path

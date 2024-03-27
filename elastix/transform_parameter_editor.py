@@ -37,6 +37,7 @@ class TransformParameterFileEditor(object):
         f = open(self.transform_parameter_file_path, 'r')
         lines = f.readlines()
         lines = [line.strip() for line in lines]
+        f.close()
         return lines
 
     def _parse_file(self):
