@@ -14,7 +14,7 @@ pip install SimpleITK
 pip install numpy
 ```
 
-You will also need to install Elastix yourself from [http://elastix.isi.uu.nl/download.php](http://elastix.isi.uu.nl/download.php).
+You will also need to install Elastix yourself from [http://elastix.lumc.nl/download.php](http://elastix.lumc.nl/download.php).
 
 Set the `elastix_path` and `transformix_path` to the paths where you installed the binaries for `elastix` and `transformix` when using the `ElastixInterface` and `TransformixInterface` classes.
 For windows, these paths need to point to the `.exe` files.
